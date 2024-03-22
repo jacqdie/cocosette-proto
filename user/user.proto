@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "github.com/jacqdie/cocosette-proto/golang/user";
+
+service UserService {
+    rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
+    rpc GetUser(GetUserRequest) returns (GetUserResponse);
+
+    rpc LoginUser(LoginUserRequest) returns (LoginUserResponse);
+    rpc LogoutUser(LogoutUserRequest) returns (LogoutUserResponse);
+    rpc AuthToken(AuthTokenRequest) returns (AuthTokenResponse);
+  
+    rpc AssignRole(AssignRoleRequest) returns (AssignRoleResponse);
+    rpc RevokeRole(RevokeRoleRequest) returns (RevokeRoleResponse);
+    rpc GetRoles(GetRolesRequest) returns (GetRolesResponse);
+}
+
+message User {
+    int64 id = 1;
+    string username = 2;
+    string email = 3;
+    string password = 4;
+    repeated Role roles = 5;
+}
+
+message RegisterUserRequest {
+    string username = 1;
+    string password = 2;
+    string email = 3;
+}
+
+message RegisterUserResponse {
+    User user = 1;
+}
+
+message GetUserRequest {
+    int64 id = 1;
+}
+
+message GetUserResponse {
+    User user = 1;
+}
+
+message GetRolesRequest {
+    int64 userId = 1;
+}
+
+message GetRolesResponse {
+    repeated Role roles = 1;
+}
+
+message LoginUserRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message LoginUserResponse {
+    int64 id = 1;
+    string token = 2;
+}
+
+message LogoutUserRequest {
+    int64 id = 1;
+    string token = 2;
+}
+
+message LogoutUserResponse {
+    bool success = 1;
+}
+
+message AuthTokenRequest {
+    string token = 1;
+}
+
+message AuthTokenResponse {
+    bool valid = 1;
+}
+
+message Role {
+    int64 id = 1;
+    string rolename = 2;
+}
+
+message AssignRoleRequest {
+    string username = 1;
+    string roleName = 2;
+}
+
+message AssignRoleResponse {
+    User user = 1;
+}
+
+message RevokeRoleRequest {
+    string username = 1;
+    string roleName = 2;
+}
+
+message RevokeRoleResponse {
+    User user = 1; 
+}
